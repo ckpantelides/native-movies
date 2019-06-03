@@ -1,56 +1,47 @@
 <template>
-  <Page @loaded="loaded" actionBarHidden="true">
-    <StackLayout>
-      <label class="title" text="Cinemas"/>
-      <ListView for="result in results" height="100%">
-        <v-template>
-          <card-view class="cardStyle" margin="10" elevation="40" radius="1" height="200">
-            <label class="cardContent" :text="result.name" textWrap="true"/>
-          </card-view>
-        </v-template>
-      </ListView>
-    </StackLayout>
-  </Page>
+  <component
+    :is="currentComponent"
+    @cinemaChosen="loadMovieTimes"
+    @navigateHome="reloadCinemas"
+    @newCinemaSearch="newCinemaSearch"
+    :IDtoSearch="cinemaIDprop"
+    :newLocation="newLocation"
+  ></component>
 </template>
 
 <script >
-import axios from "axios";
 import Vue from "nativescript-vue";
+import Cinemas from "../components/Cinemas.vue";
+import MovieTimes from "../components/MovieTimes.vue";
+import NewCinemaSearch from "../components/NewCinemaSearch.vue";
 
 const API = "https://cinelistapi.herokuapp.com/search/cinemas/coordinates/";
 
 export default {
+  name: "app",
+  components: {
+    Cinemas,
+    MovieTimes,
+    NewCinemaSearch
+  },
   data() {
     return {
-      msg: "Hello There",
-      cinemaID: Number,
-      results: [],
-      location: "",
-      loader: true
+      currentComponent: Cinemas,
+      cinemaIDprop: Number,
+      newLocation: String
     };
   },
   methods: {
-    getCinemas(url) {
-      axios
-        .get(url)
-        .then(response => {
-          let firstTenResults = response.data.cinemas.slice(0, 10);
-          this.results = firstTenResults;
-        })
-        .catch(error => {
-          console.log("Error with coordinate search");
-          /****************************************************/
-          // Need to catch error with this too
-          this.getCinemas(
-            "https://cinelistapi.herokuapp.com/search/cinemas/location/finchley"
-          );
-        });
+    loadMovieTimes(payload) {
+      this.cinemaIDprop = parseInt(payload);
+      this.currentComponent = MovieTimes;
     },
-    loaded() {
-      const lat = 51.510357;
-      const lon = -0.116773;
-
-      this.getCinemas(API + lat + "/" + lon);
+    reloadCinemas() {
+      this.currentComponent = Cinemas;
+    },
+    newCinemaSearch(data) {
+      this.newLocation = data;
+      this.currentComponent = NewCinemaSearch;
     }
   }
 };
