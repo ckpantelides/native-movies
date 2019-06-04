@@ -1,9 +1,12 @@
 <template >
-  <ListView @loaded="loaded" for="result in results" height="100%">
+  <ListView ref="listView" @loaded="loaded" for="(result, index) in results" height="100%">
     <v-template>
       <card-view class="cardStyle" margin="10" elevation="40" radius="1" height="200">
         <StackLayout>
-          <Label class="cardContent" :text="result.title" textWrap="true"/>
+          <StackLayout orientation="horizontal">
+            <Image :src="images[index].poster" stretch="aspectFill"></Image>
+            <Label class="cardContent" :text="result.title" textWrap="true"/>
+          </StackLayout>
           <ScrollView class="footer" orientation="horizontal">
             <StackLayout orientation="horizontal" horizontalAlignment="center">
               <Label class="times" :text="' ' + ' ' + el + ' ' + ' '" v-for="el in result.times"/>
@@ -18,6 +21,10 @@
 <script >
 import axios from "axios";
 import Vue from "nativescript-vue";
+import Image from "tns-core-modules/ui/image";
+
+const SocketIO = require("nativescript-socket.io");
+const socket = SocketIO.connect("https://movietime-server.herokuapp.com/");
 
 const API = "https://cinelistapi.herokuapp.com/get/times/cinema/";
 
@@ -30,6 +37,28 @@ export default {
   data: function() {
     return {
       results: [],
+      imagesLoaded: false,
+      images: [
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" },
+        { poster: "https://via.placeholder.com/150" }
+      ],
       loader: true
     };
   },
@@ -52,6 +81,11 @@ export default {
     },
     loaded() {
       this.buildUrl();
+      socket.on("image links", data => {
+        this.images = data;
+        // forces a re-render of ListView, so the images are shown
+        this.$refs.listView.nativeView.refresh();
+      });
     }
   }
 };
@@ -66,6 +100,8 @@ export default {
   text-align: center;
   margin-top: 5%;
   font-weight: bold;
+  padding-left: 5;
+  padding-right: 5;
 }
 
 .message {
@@ -90,6 +126,17 @@ export default {
   padding: 20;
   font-size: 15;
   font-family: Josefin Sans, sans-serif;
+  font-weight: bold;
   text-align: center;
+}
+
+.day.active {
+  font-size: 16;
+}
+
+image {
+  height: 50;
+  width: 50;
+  margin-left: 5;
 }
 </style>
