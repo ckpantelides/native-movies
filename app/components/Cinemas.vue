@@ -1,6 +1,15 @@
 <template>
   <Page class="cinemas" @loaded="loaded" actionBarHidden="true">
     <StackLayout>
+      <SearchBar
+        v-if="showSearchBar"
+        ref="searchBar"
+        hint="Search by place name"
+        :text="searchPhrase"
+        @submit="onSubmit"
+        height="30"
+        class="search"
+      />
       <label class="title" text="Cinemas"/>
       <ListView for="result in results" height="100%">
         <v-template>
@@ -23,6 +32,7 @@
 <script >
 import axios from "axios";
 import Vue from "nativescript-vue";
+var view = require("ui/core/view");
 
 const API = "https://cinelistapi.herokuapp.com/search/cinemas/coordinates/";
 
@@ -33,7 +43,9 @@ export default {
       cinemaID: Number,
       results: [],
       location: "",
-      loader: true
+      loader: true,
+      showSearchBar: false,
+      searchPhrase: ""
     };
   },
   methods: {
@@ -54,6 +66,7 @@ export default {
         });
     },
     loaded() {
+      // this.hideKeyBoard();
       const lat = 51.510357;
       const lon = -0.116773;
 
@@ -64,6 +77,11 @@ export default {
     },
     saveLocation() {
       this.$emit("newCinemaSearch", this.location);
+      // },
+      // hideKeyBoard() {
+      //   setTimeout(() => {
+      //     this.$refs.searchBar.nativeView.dismissSoftInput();
+      //   }, 5);
     }
   }
 };
@@ -78,6 +96,11 @@ export default {
   text-align: center;
   margin-top: 5%;
   font-weight: bold;
+}
+
+.search {
+  font-family: Josefin Sans, sans-serif;
+  font-size: 15;
 }
 
 .message {

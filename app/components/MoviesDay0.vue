@@ -83,8 +83,8 @@ export default {
       this.buildUrl();
       socket.on("image links", data => {
         this.images = data;
-        // forces a re-render of ListView, so the images are shown
-        this.$refs.listView.nativeView.refresh();
+                this.$refs.listView.nativeView.refresh();
+
       });
     }
   }

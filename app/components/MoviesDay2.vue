@@ -1,5 +1,5 @@
 <template >
-  <ListView ref="listView" @loaded="loaded" for="(result, index) in results" height="100%">
+  <ListView @loaded="loaded" for="(result, index) in results" height="100%">
     <v-template>
       <card-view class="cardStyle" margin="10" elevation="40" radius="1" height="200">
         <StackLayout>
@@ -83,8 +83,6 @@ export default {
       this.buildUrl();
       socket.on("image links", data => {
         this.images = data;
-        // forces a re-render of ListView, so the images are shown
-        this.$refs.listView.nativeView.refresh();
       });
     }
   }
