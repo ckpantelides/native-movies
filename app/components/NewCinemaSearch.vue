@@ -1,10 +1,32 @@
 <template>
   <Page @loaded="loaded" actionBarHidden="true">
     <StackLayout>
+      <Image
+        v-if="showSearchIcon"
+        @tap="revealSearchBar"
+        height="16"
+        class="searchIcon"
+        src="~/assets/images/search.png"
+      />
+      <SearchBar
+        v-if="showSearchBar"
+        hint="City, town or placename"
+        v-model="location"
+        @submit="newSearch"
+        height="30"
+        class="search"
+      />
       <label class="title" text="Cinemas"/>
       <ListView for="result in results" height="100%">
         <v-template>
-          <card-view class="cardStyle" margin="10" elevation="40" radius="1" height="200">
+          <card-view
+            @tap="cinemaChosen(result.id)"
+            class="cardStyle"
+            margin="10"
+            elevation="40"
+            radius="1"
+            height="200"
+          >
             <label class="cardContent" :text="result.name" textWrap="true"/>
           </card-view>
         </v-template>
@@ -14,19 +36,24 @@
 </template>
 
 <script >
-import axios from "axios";
 import Vue from "nativescript-vue";
+import axios from "axios";
 
-const API = "https://cinelistapi.herokuapp.com/search/cinemas/coordinates/";
+const API = "https://cinelistapi.herokuapp.com/search/cinemas/location/";
 
 export default {
+  name: "NewCinemaSearch",
+  props: {
+    newLocation: String
+  },
   data() {
     return {
-      msg: "Hello There",
       cinemaID: Number,
       results: [],
       location: "",
-      loader: true
+      loader: true,
+      showSearchBar: false,
+      showSearchIcon: true
     };
   },
   methods: {
@@ -36,6 +63,8 @@ export default {
         .then(response => {
           let firstTenResults = response.data.cinemas.slice(0, 10);
           this.results = firstTenResults;
+          this.location = "";
+          this.loader = false;
         })
         .catch(error => {
           console.log("Error with coordinate search");
@@ -46,11 +75,23 @@ export default {
           );
         });
     },
+    buildUrl() {
+      this.getCinemas(API + this.newLocation);
+    },
+    cinemaChosen(cinemaID) {
+      this.$emit("cinemaChosen", cinemaID);
+    },
+    newSearch() {
+      this.results = [];
+      this.loader = true;
+      this.getCinemas(API + this.location);
+    },
     loaded() {
-      const lat = 51.510357;
-      const lon = -0.116773;
-
-      this.getCinemas(API + lat + "/" + lon);
+      this.buildUrl();
+    },
+    revealSearchBar() {
+      this.showSearchBar = true;
+      this.showSearchIcon = false;
     }
   }
 };
@@ -63,8 +104,17 @@ export default {
   color: white;
   margin-top: 0;
   text-align: center;
-  margin-top: 5%;
+  margin-top: 2%;
   font-weight: bold;
+}
+
+.search {
+  font-family: Josefin Sans, sans-serif;
+  font-size: 15;
+}
+
+.searchIcon {
+  margin-top: 3%;
 }
 
 .message {

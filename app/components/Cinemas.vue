@@ -10,10 +10,9 @@
       />
       <SearchBar
         v-if="showSearchBar"
-        ref="searchBar"
-        hint="Search by place name"
-        :text="searchPhrase"
-        @submit="onSubmit"
+        hint="City, town or placename"
+        v-model="location"
+        @submit="saveLocation"
         height="30"
         class="search"
       />
@@ -52,8 +51,7 @@ export default {
       location: "",
       loader: true,
       showSearchBar: false,
-      showSearchIcon: true,
-      searchPhrase: ""
+      showSearchIcon: true
     };
   },
   methods: {
@@ -85,11 +83,6 @@ export default {
     },
     saveLocation() {
       this.$emit("newCinemaSearch", this.location);
-      // },
-      // hideKeyBoard() {
-      //   setTimeout(() => {
-      //     this.$refs.searchBar.nativeView.dismissSoftInput();
-      //   }, 5);
     },
     revealSearchBar() {
       this.showSearchBar = true;
@@ -118,6 +111,7 @@ export default {
 .searchIcon {
   margin-top: 3%;
 }
+
 .message {
   vertical-align: center;
   text-align: center;
