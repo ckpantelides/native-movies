@@ -1,6 +1,13 @@
 <template>
   <Page class="cinemas" @loaded="loaded" actionBarHidden="true">
     <StackLayout>
+      <Image
+        v-if="showSearchIcon"
+        @tap="revealSearchBar"
+        height="16"
+        class="searchIcon"
+        src="~/assets/images/search.png"
+      />
       <SearchBar
         v-if="showSearchBar"
         ref="searchBar"
@@ -45,6 +52,7 @@ export default {
       location: "",
       loader: true,
       showSearchBar: false,
+      showSearchIcon: true,
       searchPhrase: ""
     };
   },
@@ -82,6 +90,10 @@ export default {
       //   setTimeout(() => {
       //     this.$refs.searchBar.nativeView.dismissSoftInput();
       //   }, 5);
+    },
+    revealSearchBar() {
+      this.showSearchBar = true;
+      this.showSearchIcon = false;
     }
   }
 };
@@ -94,7 +106,7 @@ export default {
   color: white;
   margin-top: 0;
   text-align: center;
-  margin-top: 5%;
+  margin-top: 2%;
   font-weight: bold;
 }
 
@@ -103,6 +115,9 @@ export default {
   font-size: 15;
 }
 
+.searchIcon {
+  margin-top: 3%;
+}
 .message {
   vertical-align: center;
   text-align: center;

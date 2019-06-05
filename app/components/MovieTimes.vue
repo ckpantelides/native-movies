@@ -1,6 +1,7 @@
 <template>
   <Page class="movie-times" actionBarHidden="true">
     <StackLayout>
+      <Image @tap="navigateHome" height="18" class="homeIcon" src="~/assets/images/home.png"/>
       <Label class="title" text="Movie Times"/>
       <StackLayout orientation="horizontal" horizontalAlignment="center">
         <Label
@@ -94,8 +95,12 @@ export default {
   color: white;
   margin-top: 0;
   text-align: center;
-  margin-top: 5%;
+  margin-top: 2%;
   font-weight: bold;
+}
+
+.homeIcon {
+  margin-top: 3%;
 }
 
 .day {

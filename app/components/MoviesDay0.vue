@@ -83,8 +83,7 @@ export default {
       this.buildUrl();
       socket.on("image links", data => {
         this.images = data;
-                this.$refs.listView.nativeView.refresh();
-
+        // this.$refs.listView.nativeView.refresh();
       });
     }
   }
