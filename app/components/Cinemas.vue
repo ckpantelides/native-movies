@@ -1,5 +1,5 @@
 <template>
-  <Page class="cinemas" @loaded="loaded" actionBarHidden="true">
+  <Page class="cinemas" actionBarHidden="true">
     <StackLayout>
       <Image
         v-if="showSearchIcon"
@@ -40,7 +40,8 @@
 <script >
 import axios from "axios";
 import Vue from "nativescript-vue";
-var view = require("ui/core/view");
+import * as geolocation from "nativescript-geolocation";
+import { Accuracy } from "tns-core-modules/ui/enums";
 
 const API = "https://cinelistapi.herokuapp.com/search/cinemas/coordinates/";
 
@@ -74,13 +75,12 @@ export default {
           );
         });
     },
-    loaded() {
-      // this.hideKeyBoard();
-      const lat = 51.510357;
-      const lon = -0.116773;
+    // loaded() {
+    // const lat = 51.510357;
+    // const lon = -0.116773;
 
-      this.getCinemas(API + lat + "/" + lon);
-    },
+    // this.getCinemas(API + lat + "/" + lon);
+    // },
     cinemaChosen(cinemaID) {
       this.$emit("cinemaChosen", cinemaID);
     },
@@ -91,6 +91,23 @@ export default {
       this.showSearchBar = true;
       this.showSearchIcon = false;
     }
+  },
+  mounted() {
+    console.log("Finding your location");
+    geolocation
+      .getCurrentLocation({
+        desiredAccuracy: Accuracy.high,
+        maximumAge: 1000,
+        timeout: 20000
+      })
+      .then(res => {
+        let lat = res.latitude;
+        let lon = res.longitude;
+        this.getCinemas(API + lat + "/" + lon);
+      })
+      .catch(e => {
+        console.log("Error finding your location", e);
+      });
   }
 };
 </script>
