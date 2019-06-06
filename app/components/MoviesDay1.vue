@@ -1,21 +1,24 @@
 <template >
-  <ListView @loaded="loaded" for="(result, index) in results" height="100%">
-    <v-template>
-      <card-view class="cardStyle" margin="10" elevation="40" radius="1" height="200">
-        <StackLayout>
-          <StackLayout orientation="horizontal">
-            <Image :src="images[index].poster" stretch="aspectFill"></Image>
-            <Label class="cardContent" :text="result.title" textWrap="true"/>
-          </StackLayout>
-          <ScrollView class="footer" orientation="horizontal">
-            <StackLayout orientation="horizontal" horizontalAlignment="center">
-              <Label class="times" :text="' ' + ' ' + el + ' ' + ' '" v-for="el in result.times"/>
+  <StackLayout>
+    <ActivityIndicator :busy="loading" height="20"/>
+    <ListView @loaded="loaded" for="(result, index) in results" height="100%">
+      <v-template>
+        <card-view class="cardStyle" margin="10" elevation="40" radius="1" height="200">
+          <StackLayout>
+            <StackLayout orientation="horizontal">
+              <Image :src="images[index].poster" stretch="aspectFill"></Image>
+              <Label class="cardContent" :text="result.title" textWrap="true"/>
             </StackLayout>
-          </ScrollView>
-        </StackLayout>
-      </card-view>
-    </v-template>
-  </ListView>
+            <ScrollView class="footer" orientation="horizontal">
+              <StackLayout orientation="horizontal" horizontalAlignment="center">
+                <Label class="times" :text="' ' + ' ' + el + ' ' + ' '" v-for="el in result.times"/>
+              </StackLayout>
+            </ScrollView>
+          </StackLayout>
+        </card-view>
+      </v-template>
+    </ListView>
+  </StackLayout>
 </template>
 
 <script >
@@ -58,7 +61,7 @@ export default {
         { poster: "https://via.placeholder.com/150" },
         { poster: "https://via.placeholder.com/150" }
       ],
-      loader: true
+      loading: true
     };
   },
   methods: {
@@ -67,7 +70,7 @@ export default {
         .get(url)
         .then(response => {
           this.results = response.data.listings;
-          this.loader = false;
+          this.loading = false;
           // data emitted to server, so server can perform movie image search
           socket.emit("request images", { data: response.data.listings });
         })

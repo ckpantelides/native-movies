@@ -17,6 +17,8 @@
         class="search"
       />
       <label class="title" text="Cinemas"/>
+      <ActivityIndicator :busy="loading" height="20"/>
+
       <ListView for="result in results" height="100%">
         <v-template>
           <card-view
@@ -49,7 +51,7 @@ export default {
       cinemaID: Number,
       results: [],
       location: "",
-      loader: true,
+      loading: true,
       showSearchBar: false,
       showSearchIcon: true
     };
@@ -61,6 +63,7 @@ export default {
         .then(response => {
           let firstTenResults = response.data.cinemas.slice(0, 10);
           this.results = firstTenResults;
+          this.loading = false;
         })
         .catch(error => {
           console.log("Error with coordinate search");
