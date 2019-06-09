@@ -1,19 +1,35 @@
 <template >
   <StackLayout>
     <ActivityIndicator :busy="loading" height="20"/>
-    <ListView @loaded="loaded" for="(result, index) in results" height="100%">
+    <ListView ref="listView" @loaded="loaded" for="(result, index) in results" height="100%">
       <v-template>
-        <card-view class="cardStyle" margin="10" elevation="40" radius="1" height="200">
+        <card-view
+          @tap="flip(index)"
+          class="cardStyle"
+          margin="10"
+          elevation="40"
+          radius="1"
+          height="200"
+        >
           <StackLayout>
-            <StackLayout orientation="horizontal">
-              <Image :src="images[index].poster" stretch="aspectFill"></Image>
-              <Label class="cardContent" :text="result.title" textWrap="true"/>
-            </StackLayout>
-            <ScrollView class="footer" orientation="horizontal">
-              <StackLayout orientation="horizontal" horizontalAlignment="center">
-                <Label class="times" :text="' ' + ' ' + el + ' ' + ' '" v-for="el in result.times"/>
+            <StackLayout :class="['front', { active: showBack[index].yes === true }]">
+              <StackLayout orientation="horizontal">
+                <Image :src="images[index].poster" stretch="aspectFill"></Image>
+                <Label class="cardContent" :text="result.title" textWrap="true"/>
               </StackLayout>
-            </ScrollView>
+              <ScrollView class="footer" orientation="horizontal">
+                <StackLayout orientation="horizontal" horizontalAlignment="center">
+                  <Label
+                    class="times"
+                    :text="' ' + ' ' + el + ' ' + ' '"
+                    v-for="el in result.times"
+                  />
+                </StackLayout>
+              </ScrollView>
+            </StackLayout>
+            <StackLayout :class="['back', { active: showBack[index].yes === true }]">
+              <Label class="cardContent" :text="images[index].blurb" textWrap="true"/>
+            </StackLayout>
           </StackLayout>
         </card-view>
       </v-template>
@@ -32,7 +48,7 @@ const socket = SocketIO.connect("https://movietime-server.herokuapp.com/");
 const API = "https://cinelistapi.herokuapp.com/get/times/cinema/";
 
 export default {
-  name: "MovieDay1",
+  name: "MovieDay0",
   components: {},
   props: {
     IDtoSearch: Number
@@ -41,25 +57,46 @@ export default {
     return {
       results: [],
       images: [
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" },
-        { poster: "https://via.placeholder.com/150" }
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" },
+        { poster: "https://via.placeholder.com/150", blurb: "Description" }
+      ],
+      showBack: [
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false },
+        { yes: false }
       ],
       loading: true
     };
@@ -85,7 +122,17 @@ export default {
       this.buildUrl();
       socket.on("image links", data => {
         this.images = data;
+        // this.$refs.listView.nativeView.refresh();
       });
+    },
+    flip(i) {
+      if (this.showBack[i].yes === false) {
+        this.showBack[i].yes = true;
+        this.$refs.listView.nativeView.refresh();
+      } else if (this.showBack[i].yes === true) {
+        this.showBack[i].yes = false;
+        this.$refs.listView.nativeView.refresh();
+      }
     }
   }
 };
@@ -128,6 +175,25 @@ export default {
   font-family: Josefin Sans, sans-serif;
   font-weight: bold;
   text-align: center;
+}
+
+.front {
+  visibility: visible;
+}
+.front.active {
+  visibility: collapse;
+}
+
+.back {
+  visibility: collapse;
+}
+
+.back.active {
+  visibility: visible;
+}
+
+.day.active {
+  font-size: 16;
 }
 
 image {
