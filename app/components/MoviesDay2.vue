@@ -101,6 +101,12 @@ export default {
       loading: true
     };
   },
+  watch: {
+    images: function(val) {
+      // when the images are received via socketio, this view will be reloaded
+      this.refreshView();
+    }
+  },
   methods: {
     getMovies(url) {
       axios
@@ -118,20 +124,22 @@ export default {
     buildUrl() {
       this.getMovies(API + this.IDtoSearch + "?day=2");
     },
+    refreshView() {
+      this.$refs.listView.nativeView.refresh();
+    },
     loaded() {
       this.buildUrl();
       socket.on("image links", data => {
         this.images = data;
-        // this.$refs.listView.nativeView.refresh();
       });
     },
     flip(i) {
       if (this.showBack[i].yes === false) {
         this.showBack[i].yes = true;
-        this.$refs.listView.nativeView.refresh();
+        this.refreshView();
       } else if (this.showBack[i].yes === true) {
         this.showBack[i].yes = false;
-        this.$refs.listView.nativeView.refresh();
+        this.refreshView();
       }
     }
   }
