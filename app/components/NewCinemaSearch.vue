@@ -22,7 +22,7 @@
       <ListView for="result in results" height="100%">
         <v-template>
           <card-view
-            @tap="cinemaChosen(result.id)"
+            @tap="cinemaChosen(result)"
             class="cardStyle"
             margin="10"
             elevation="40"
@@ -80,8 +80,8 @@ export default {
     buildUrl() {
       this.getCinemas(API + this.newLocation);
     },
-    cinemaChosen(cinemaID) {
-      this.$emit("cinemaChosen", cinemaID);
+    cinemaChosen(cinema) {
+      this.$emit("cinemaChosen", cinema);
     },
     newSearch() {
       this.results = [];
