@@ -12,7 +12,7 @@
           height="200"
         >
           <StackLayout>
-            <StackLayout :class="['front', { active: showBack[index].yes === true }]">
+            <StackLayout :class="['front', { active: showBack[index] === true }]">
               <StackLayout orientation="horizontal">
                 <Image :src="images[index].poster" stretch="aspectFill"></Image>
                 <Label class="cardContent" :text="result.title" textWrap="true"/>
@@ -27,7 +27,7 @@
                 </StackLayout>
               </ScrollView>
             </StackLayout>
-            <StackLayout :class="['back', { active: showBack[index].yes === true }]">
+            <StackLayout :class="['back', { active: showBack[index] === true }]">
               <Label class="cardContent" :text="images[index].blurb" textWrap="true"/>
             </StackLayout>
           </StackLayout>
@@ -48,7 +48,7 @@ const socket = SocketIO.connect("https://movietime-server.herokuapp.com/");
 const API = "https://cinelistapi.herokuapp.com/get/times/cinema/";
 
 export default {
-  name: "MovieDay0",
+  name: "MovieDay1",
   components: {},
   props: {
     IDtoSearch: Number
@@ -57,46 +57,108 @@ export default {
     return {
       results: [],
       images: [
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" },
-        { poster: "https://via.placeholder.com/150", blurb: "Description" }
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        }
       ],
       showBack: [
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false },
-        { yes: false }
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
       ],
       loading: true
     };
@@ -134,11 +196,11 @@ export default {
       });
     },
     flip(i) {
-      if (this.showBack[i].yes === false) {
-        this.showBack[i].yes = true;
+      if (this.showBack[i] === false) {
+        this.showBack[i] = true;
         this.refreshView();
-      } else if (this.showBack[i].yes === true) {
-        this.showBack[i].yes = false;
+      } else if (this.showBack[i] === true) {
+        this.showBack[i] = false;
         this.refreshView();
       }
     }
