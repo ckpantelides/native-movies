@@ -22,7 +22,7 @@
       <ListView for="result in results" height="100%">
         <v-template>
           <card-view
-            @tap="cinemaChosen(result.id)"
+            @tap="cinemaChosen(result)"
             class="cardStyle"
             margin="10"
             elevation="40"
@@ -71,7 +71,7 @@ export default {
           /****************************************************/
           // Need to catch error with this too
           this.getCinemas(
-            "https://cinelistapi.herokuapp.com/search/cinemas/location/finchley"
+            "https://cinelistapi.herokuapp.com/search/cinemas/location/london"
           );
         });
     },
@@ -81,8 +81,8 @@ export default {
 
     // this.getCinemas(API + lat + "/" + lon);
     // },
-    cinemaChosen(cinemaID) {
-      this.$emit("cinemaChosen", cinemaID);
+    cinemaChosen(cinema) {
+      this.$emit("cinemaChosen", cinema);
     },
     saveLocation() {
       this.$emit("newCinemaSearch", this.location);

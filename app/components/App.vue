@@ -6,6 +6,7 @@
     @newCinemaSearch="newCinemaSearch"
     :IDtoSearch="cinemaIDprop"
     :newLocation="newLocation"
+    :cinemaName="cinemaNameProp"
   ></component>
 </template>
 
@@ -28,12 +29,14 @@ export default {
     return {
       currentComponent: Cinemas,
       cinemaIDprop: Number,
-      newLocation: String
+      newLocation: String,
+      cinemaNameProp: String
     };
   },
   methods: {
     loadMovieTimes(payload) {
-      this.cinemaIDprop = parseInt(payload);
+      this.cinemaIDprop = parseInt(payload.id);
+      this.cinemaNameProp = payload.name;
       this.currentComponent = MovieTimes;
     },
     reloadCinemas() {

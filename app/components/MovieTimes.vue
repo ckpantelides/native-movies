@@ -27,6 +27,7 @@
           :text="dayAfterTomorrow"
         />
       </StackLayout>
+      <Label class="cinema-name" :text="cinemaName" horizontalAlignment="center"/>
       <component :is="currentComponent" :IDtoSearch="IDtoSearch"></component>
     </StackLayout>
   </Page>
@@ -39,12 +40,11 @@ import MoviesDay0 from "../components/MoviesDay0.vue";
 import MoviesDay1 from "../components/MoviesDay1.vue";
 import MoviesDay2 from "../components/MoviesDay2.vue";
 
-const API = "https://cinelistapi.herokuapp.com/search/cinemas/coordinates/";
-
 export default {
   name: "MovieTimes",
   props: {
-    IDtoSearch: Number
+    IDtoSearch: Number,
+    cinemaName: String
   },
   components: {
     MoviesDay0,
@@ -107,6 +107,14 @@ export default {
   color: white;
   font-family: Josefin Sans, sans-serif;
   padding: 5;
+}
+
+.cinema-name {
+  color: white;
+  font-family: Josefin Sans, sans-serif;
+  font-style: italic;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .day.active {
