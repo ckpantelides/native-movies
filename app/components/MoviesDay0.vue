@@ -42,6 +42,10 @@ import axios from "axios";
 import Vue from "nativescript-vue";
 import Image from "tns-core-modules/ui/image";
 
+// localStorage will be used to cache results from API requests
+import localStorage from "nativescript-localstorage";
+
+// socketIO is used for movie image and movie description requests
 const SocketIO = require("nativescript-socket.io");
 const socket = SocketIO.connect("https://movietime-server.herokuapp.com/");
 
@@ -175,6 +179,12 @@ export default {
         .get(url)
         .then(response => {
           this.results = response.data.listings;
+          // set results and cinemaID to cache. localStorage does not accept arrays
+          localStorage.setItem(
+            "cachedMovies0",
+            JSON.stringify(response.data.listings)
+          );
+          localStorage.setItem("cinemaID", this.IDtoSearch);
           this.loading = false;
           // data emitted to server, so server can perform movie image search
           socket.emit("request images", { data: response.data.listings });
@@ -184,7 +194,24 @@ export default {
         });
     },
     buildUrl() {
-      this.getMovies(API + this.IDtoSearch);
+      let d = new Date();
+      let date = d.getDate() + "." + d.getMonth() + "." + d.getFullYear();
+      // compare cinemaID and date with results in cache
+      // not comparing type, as localStorage stores as string
+      if (
+        this.IDtoSearch == localStorage.getItem("cinemaID") &&
+        date == localStorage.getItem("cachedDate")
+      ) {
+        // if the cinemaID and date match with cache, use cachedMovies
+        this.results = JSON.parse(localStorage.getItem("cachedMovies0"));
+        console.log("Cache used");
+        // the images aren't stored in localStorage, therefore a socket request is needed
+        socket.emit("request images", { data: this.results });
+        this.loading = false;
+      } else {
+        // else perform API request for movies
+        this.getMovies(API + this.IDtoSearch);
+      }
     },
     refreshView() {
       this.$refs.listView.nativeView.refresh();

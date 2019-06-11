@@ -16,8 +16,6 @@ import Cinemas from "../components/Cinemas.vue";
 import MovieTimes from "../components/MovieTimes.vue";
 import NewCinemaSearch from "../components/NewCinemaSearch.vue";
 
-const API = "https://cinelistapi.herokuapp.com/search/cinemas/coordinates/";
-
 export default {
   name: "app",
   components: {
