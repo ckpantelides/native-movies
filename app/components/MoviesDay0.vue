@@ -140,9 +140,63 @@ export default {
         {
           poster: "~/assets/images/placeholder.png",
           blurb: "Description loading..."
+        },
+         {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+         {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
         }
       ],
       showBack: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
         false,
         false,
         false,
