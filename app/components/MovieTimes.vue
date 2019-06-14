@@ -3,10 +3,11 @@
     <StackLayout>
       <Image @tap="navigateHome" height="18" class="homeIcon" src="~/assets/images/home.png"/>
       <Label class="title" text="Movie Times"/>
-      <StackLayout orientation="horizontal" horizontalAlignment="center">
-        <Label
-          @tap="chooseMoviesDay('MoviesDay0')"
-          :class="[
+      <ScrollView class="footer" orientation="horizontal" width="90%">
+        <StackLayout orientation="horizontal" horizontalAlignment="center">
+          <Label
+            @tap="chooseMoviesDay('MoviesDay0')"
+            :class="[
             'day',
             {
               active:
@@ -14,19 +15,41 @@
                 this.componentOpenedFirstTime === true
             }
           ]"
-          text="Today"
-        />
-        <Label
-          @tap="chooseMoviesDay('MoviesDay1')"
-          :class="['day', { active: currentComponent === 'MoviesDay1' }]"
-          text="Tomorrow"
-        />
-        <Label
-          @tap="chooseMoviesDay('MoviesDay2')"
-          :class="['day', { active: currentComponent === 'MoviesDay2' }]"
-          :text="dayAfterTomorrow"
-        />
-      </StackLayout>
+            text="Today"
+          />
+          <Label
+            @tap="chooseMoviesDay('MoviesDay1')"
+            :class="['day', { active: currentComponent === 'MoviesDay1' }]"
+            text="Tomorrow"
+          />
+          <Label
+            @tap="chooseMoviesDay('MoviesDay2')"
+            :class="['day', { active: currentComponent === 'MoviesDay2' }]"
+            :text="daysAfterToday(2)"
+          />
+          <Label
+            @tap="chooseMoviesDay('MoviesDay3')"
+            :class="['day', { active: currentComponent === 'MoviesDay3' }]"
+            :text="daysAfterToday(3)"
+          />
+          <Label
+            @tap="chooseMoviesDay('MoviesDay4')"
+            :class="['day', { active: currentComponent === 'MoviesDay4' }]"
+            :text="daysAfterToday(4)"
+          />
+          <Label
+            @tap="chooseMoviesDay('MoviesDay5')"
+            :class="['day', { active: currentComponent === 'MoviesDay5' }]"
+            :text="daysAfterToday(5)"
+          />
+          <Label
+            @tap="chooseMoviesDay('MoviesDay6')"
+            :class="['day', { active: currentComponent === 'MoviesDay6' }]"
+            :text="daysAfterToday(6)"
+          />
+        </StackLayout>
+      </ScrollView>
+
       <Label class="cinema-name" :text="cinemaName" horizontalAlignment="center"/>
       <component :is="currentComponent" :IDtoSearch="IDtoSearch"></component>
     </StackLayout>
@@ -39,6 +62,10 @@ import Vue from "nativescript-vue";
 import MoviesDay0 from "../components/MoviesDay0.vue";
 import MoviesDay1 from "../components/MoviesDay1.vue";
 import MoviesDay2 from "../components/MoviesDay2.vue";
+import MoviesDay3 from "../components/MoviesDay3.vue";
+import MoviesDay4 from "../components/MoviesDay4.vue";
+import MoviesDay5 from "../components/MoviesDay5.vue";
+import MoviesDay6 from "../components/MoviesDay6.vue";
 
 export default {
   name: "MovieTimes",
@@ -49,7 +76,11 @@ export default {
   components: {
     MoviesDay0,
     MoviesDay1,
-    MoviesDay2
+    MoviesDay2,
+    MoviesDay3,
+    MoviesDay4,
+    MoviesDay5,
+    MoviesDay6
   },
   data: function() {
     return {
@@ -65,12 +96,10 @@ export default {
     },
     navigateHome() {
       this.$emit("navigateHome");
-    }
-  },
-  computed: {
-    dayAfterTomorrow: function() {
+    },
+    daysAfterToday(n) {
       var d = new Date();
-      var dayAfterTom = parseInt(d.getDay() + 2);
+      var daysAfter = parseInt(d.getDay() + n);
       var days = [
         "Sunday",
         "Monday",
@@ -80,9 +109,14 @@ export default {
         "Friday",
         "Saturday",
         "Sunday",
-        "Monday"
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
       ];
-      return days[dayAfterTom];
+      return days[daysAfter];
     }
   }
 };
