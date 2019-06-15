@@ -16,6 +16,18 @@ import Cinemas from "../components/Cinemas.vue";
 import MovieTimes from "../components/MovieTimes.vue";
 import NewCinemaSearch from "../components/NewCinemaSearch.vue";
 
+// imported to access back Android backbutton
+import {
+  AndroidApplication,
+  AndroidActivityBackPressedEventData
+} from "application";
+import * as application from "application";
+
+// prevents default back button behaviour
+application.android.on(AndroidApplication.activityBackPressedEvent, data => {
+  data.cancel = true;
+});
+
 export default {
   name: "app",
   components: {
