@@ -266,7 +266,7 @@ export default {
         this.loading = false;
       } else {
         // else perform API request for movies
-        this.getMovies(API + this.IDtoSearch + "?day=1");
+        this.getMovies(API + this.IDtoSearch);
       }
     },
     refreshView() {
