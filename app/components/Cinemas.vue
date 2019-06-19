@@ -93,7 +93,7 @@ export default {
       this.showSearchIcon = false;
     }
   },
-  mounted() {
+  created() {
     console.log("Finding your location");
     geolocation
       .getCurrentLocation({

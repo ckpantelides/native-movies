@@ -276,6 +276,12 @@ export default {
         this.images = data;
       });
     },
+    loaded() {
+      //  this.buildUrl();
+      // socket.on("image links", data => {
+      //  this.images = data;
+      // });
+    },
     flip(i) {
       if (this.showBack[i] === false) {
         this.showBack[i] = true;
@@ -285,6 +291,12 @@ export default {
         this.refreshView();
       }
     }
+  },
+  created() {
+    this.buildUrl();
+    socket.on("image links", data => {
+      this.images = data;
+    });
   }
 };
 </script>

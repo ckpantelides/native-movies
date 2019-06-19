@@ -141,10 +141,6 @@ export default {
           poster: "~/assets/images/placeholder.png",
           blurb: "Description loading..."
         },
-         {
-          poster: "~/assets/images/placeholder.png",
-          blurb: "Description loading..."
-        },
         {
           poster: "~/assets/images/placeholder.png",
           blurb: "Description loading..."
@@ -161,7 +157,11 @@ export default {
           poster: "~/assets/images/placeholder.png",
           blurb: "Description loading..."
         },
-         {
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
           poster: "~/assets/images/placeholder.png",
           blurb: "Description loading..."
         },
@@ -271,10 +271,10 @@ export default {
       this.$refs.listView.nativeView.refresh();
     },
     loaded() {
-      this.buildUrl();
-      socket.on("image links", data => {
-        this.images = data;
-      });
+      //  this.buildUrl();
+      // socket.on("image links", data => {
+      //  this.images = data;
+      // });
     },
     flip(i) {
       if (this.showBack[i] === false) {
@@ -285,6 +285,12 @@ export default {
         this.refreshView();
       }
     }
+  },
+  created() {
+    this.buildUrl();
+    socket.on("image links", data => {
+      this.images = data;
+    });
   }
 };
 </script>
