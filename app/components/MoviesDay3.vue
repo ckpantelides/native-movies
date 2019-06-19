@@ -260,7 +260,9 @@ export default {
         this.results = JSON.parse(localStorage.getItem("cachedMovies3"));
         console.log("Cache used");
         // the images aren't stored in localStorage, therefore a socket request is needed
-        socket.emit("request images", { data: this.results });
+        socket.emit("request images", {
+          data: JSON.parse(localStorage.getItem("cachedMovies3"))
+        });
         this.loading = false;
       } else {
         // else perform API request for movies

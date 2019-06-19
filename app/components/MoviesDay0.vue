@@ -141,10 +141,6 @@ export default {
           poster: "~/assets/images/placeholder.png",
           blurb: "Description loading..."
         },
-         {
-          poster: "~/assets/images/placeholder.png",
-          blurb: "Description loading..."
-        },
         {
           poster: "~/assets/images/placeholder.png",
           blurb: "Description loading..."
@@ -161,7 +157,11 @@ export default {
           poster: "~/assets/images/placeholder.png",
           blurb: "Description loading..."
         },
-         {
+        {
+          poster: "~/assets/images/placeholder.png",
+          blurb: "Description loading..."
+        },
+        {
           poster: "~/assets/images/placeholder.png",
           blurb: "Description loading..."
         },
@@ -260,11 +260,13 @@ export default {
         this.results = JSON.parse(localStorage.getItem("cachedMovies0"));
         console.log("Cache used");
         // the images aren't stored in localStorage, therefore a socket request is needed
-        socket.emit("request images", { data: this.results });
+        socket.emit("request images", {
+          data: JSON.parse(localStorage.getItem("cachedMovies0"))
+        });
         this.loading = false;
       } else {
         // else perform API request for movies
-        this.getMovies(API + this.IDtoSearch);
+        this.getMovies(API + this.IDtoSearch + "?day=1");
       }
     },
     refreshView() {
