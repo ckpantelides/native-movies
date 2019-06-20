@@ -102,8 +102,10 @@ export default {
         timeout: 20000
       })
       .then(res => {
-        let lat = res.latitude;
-        let lon = res.longitude;
+        // four decimal places gives 11m accuracy
+        let lat = res.latitude.toFixed(4);
+        let lon = res.longitude.toFixed(4);
+
         let d = new Date();
         let date = d.getDate() + "." + d.getMonth() + "." + d.getFullYear();
         // compare current lat, lon and date with results in cache
