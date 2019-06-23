@@ -18,7 +18,8 @@
       />
       <label class="title" text="Cinemas"/>
       <ActivityIndicator :busy="loading" height="20"/>
-
+      <label v-if="error" class="error" text="Sorry I couldn't find any cinemas"/>
+      <label v-if="error" class="error" text="Try the search button"/>
       <ListView for="result in results" height="100%">
         <v-template>
           <card-view
@@ -57,7 +58,8 @@ export default {
       location: "",
       loading: true,
       showSearchBar: false,
-      showSearchIcon: true
+      showSearchIcon: true,
+      error: false
     };
   },
   methods: {
@@ -73,12 +75,15 @@ export default {
             JSON.stringify(firstTenResults)
           );
           this.loading = false;
+          this.error = false;
         })
         .catch(error => {
           console.log("Error with coordinate search");
-          this.getCinemas(
-            "https://cinelistapi.herokuapp.com/search/cinemas/location/london"
-          );
+          //  this.getCinemas(
+          //    "https://cinelistapi.herokuapp.com/search/cinemas/location/london"
+          // );
+          this.loading = false;
+          this.error = true;
         });
     },
     // cinema data emitted to App.vue, so it can be used by MovieTimes
@@ -103,8 +108,9 @@ export default {
       })
       .then(res => {
         // four decimal places gives 11m accuracy
-        let lat = res.latitude.toFixed(4);
-        let lon = res.longitude.toFixed(4);
+        // three decimal places gives 110m accuracy
+        let lat = res.latitude.toFixed(3);
+        let lon = res.longitude.toFixed(3);
 
         let d = new Date();
         let date = d.getDate() + "." + d.getMonth() + "." + d.getFullYear();
@@ -130,6 +136,8 @@ export default {
       })
       .catch(e => {
         console.log("Error finding your location", e);
+        this.loading = false;
+        this.error = true;
       });
   }
 };
@@ -178,6 +186,14 @@ Page {
 
 .cardContent {
   padding: 20;
+  font-size: 15;
+  font-family: Josefin Sans, sans-serif;
+  text-align: center;
+  font-weight: bold;
+}
+
+.error {
+  color: white;
   font-size: 15;
   font-family: Josefin Sans, sans-serif;
   text-align: center;

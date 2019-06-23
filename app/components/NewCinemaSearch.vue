@@ -18,7 +18,8 @@
       />
       <label class="title" text="Cinemas"/>
       <ActivityIndicator :busy="loading" height="20"/>
-
+      <label v-if="error" class="error" text="Sorry I couldn't find any cinemas"/>
+      <label v-if="error" class="error" text="Try another place name"/>
       <ListView for="result in results" height="100%">
         <v-template>
           <card-view
@@ -55,7 +56,8 @@ export default {
       location: "",
       loading: true,
       showSearchBar: false,
-      showSearchIcon: true
+      showSearchIcon: true,
+      error: false
     };
   },
   methods: {
@@ -67,14 +69,15 @@ export default {
           this.results = firstTenResults;
           this.location = "";
           this.loading = false;
+          this.error = false;
         })
         .catch(error => {
-          console.log("Error with coordinate search");
-          /****************************************************/
-          // Need to catch error with this too
-          this.getCinemas(
-            "https://cinelistapi.herokuapp.com/search/cinemas/location/finchley"
-          );
+          console.log("Error with location search");
+          //this.getCinemas(
+          //  "https://cinelistapi.herokuapp.com/search/cinemas/location/finchley"
+          //);
+          this.loading = false;
+          this.error = true;
         });
     },
     buildUrl() {
@@ -86,6 +89,7 @@ export default {
     newSearch() {
       this.results = [];
       this.loader = true;
+      this.error = false;
       this.getCinemas(API + this.location);
     },
     loaded() {
@@ -145,5 +149,12 @@ Page {
   font-size: 15;
   font-family: Josefin Sans, sans-serif;
   text-align: center;
+}
+
+.error {
+  font-size: 15;
+  font-family: Josefin Sans, sans-serif;
+  text-align: center;
+  font-weight: bold;
 }
 </style>
