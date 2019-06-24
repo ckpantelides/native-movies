@@ -1,6 +1,8 @@
 <template >
   <StackLayout>
     <ActivityIndicator :busy="loading" height="20"/>
+    <label v-if="error" class="error" text="Sorry I couldn't find any movies"/>
+    <label v-if="error" class="error" text="Check your internet connection"/>
     <ListView ref="listView" @loaded="loaded" for="(result, index) in results" height="100%">
       <v-template>
         <card-view
@@ -218,7 +220,8 @@ export default {
         false,
         false
       ],
-      loading: true
+      loading: true,
+      error: false
     };
   },
   watch: {
@@ -240,11 +243,13 @@ export default {
           );
           localStorage.setItem("cinemaID", this.IDtoSearch);
           this.loading = false;
+          this.error = false;
           // data emitted to server, so server can perform movie image search
           socket.emit("request images", { data: response.data.listings });
         })
         .catch(error => {
-          console.log(error);
+          this.error = true;
+          this.loading = false;
         });
     },
     buildUrl() {
@@ -353,5 +358,12 @@ image {
   height: 50;
   width: 50;
   margin-left: 5;
+}
+
+.error {
+  font-size: 15;
+  font-family: Josefin Sans, sans-serif;
+  text-align: center;
+  font-weight: bold;
 }
 </style>

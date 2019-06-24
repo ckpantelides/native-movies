@@ -50,7 +50,7 @@
         </StackLayout>
       </ScrollView>
 
-      <Label class="cinema-name" :text="cinemaName" horizontalAlignment="center"/>
+      <Label class="cinema-name" :text="cinemaName[0]" horizontalAlignment="center"/>
       <component :is="currentComponent" :IDtoSearch="IDtoSearch"></component>
     </StackLayout>
   </Page>
@@ -71,7 +71,7 @@ export default {
   name: "MovieTimes",
   props: {
     IDtoSearch: Number,
-    cinemaName: String
+    cinemaName: Array
   },
   components: {
     MoviesDay0,

@@ -193,7 +193,6 @@ Page {
 }
 
 .error {
-  color: white;
   font-size: 15;
   font-family: Josefin Sans, sans-serif;
   text-align: center;

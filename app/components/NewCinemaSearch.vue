@@ -88,7 +88,7 @@ export default {
     },
     newSearch() {
       this.results = [];
-      this.loader = true;
+      this.loading = true;
       this.error = false;
       this.getCinemas(API + this.location);
     },

@@ -40,13 +40,14 @@ export default {
       currentComponent: Cinemas,
       cinemaIDprop: Number,
       newLocation: String,
-      cinemaNameProp: String
+      cinemaNameProp: Array
     };
   },
   methods: {
     loadMovieTimes(payload) {
       this.cinemaIDprop = parseInt(payload.id);
-      this.cinemaNameProp = payload.name;
+      // Split cinema name at comma - result returns an array
+      this.cinemaNameProp = payload.name.split(",", 1);
       this.currentComponent = MovieTimes;
     },
     reloadCinemas() {
