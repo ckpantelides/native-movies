@@ -1,8 +1,9 @@
 <template >
   <StackLayout>
     <ActivityIndicator :busy="loading" height="20"/>
-    <label v-if="error" class="error" text="Sorry I couldn't find any movies"/>
-    <label v-if="error" class="error" text="Check your internet connection"/>
+    <label v-if="error" class="error" text="Sorry I couldn't find any movies."/>
+    <label v-if="error" class="error" text="If your internet connection's ok,"/>
+    <label v-if="error" class="error" text="the listings may not have been released yet."/>
     <ListView ref="listView" @loaded="loaded" for="(result, index) in results" height="100%">
       <v-template>
         <card-view
@@ -235,17 +236,23 @@ export default {
       axios
         .get(url)
         .then(response => {
-          this.results = response.data.listings;
-          // set results and cinemaID to cache. localStorage does not accept arrays
-          localStorage.setItem(
-            "cachedMovies0",
-            JSON.stringify(response.data.listings)
-          );
-          localStorage.setItem("cinemaID", this.IDtoSearch);
-          this.loading = false;
-          this.error = false;
-          // data emitted to server, so server can perform movie image search
-          socket.emit("request images", { data: response.data.listings });
+          if (typeof response.data.listings == "undefined") {
+            this.results = [];
+            this.loading = false;
+            this.error = true;
+          } else {
+            this.results = response.data.listings;
+            // set results and cinemaID to cache. localStorage does not accept arrays
+            localStorage.setItem(
+              "cachedMovies0",
+              JSON.stringify(response.data.listings)
+            );
+            localStorage.setItem("cinemaID", this.IDtoSearch);
+            this.loading = false;
+            this.error = false;
+            // data emitted to server, so server can perform movie image search
+            socket.emit("request images", { data: response.data.listings });
+          }
         })
         .catch(error => {
           this.error = true;
