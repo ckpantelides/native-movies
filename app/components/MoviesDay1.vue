@@ -2,8 +2,7 @@
   <StackLayout>
     <ActivityIndicator :busy="loading" height="20"/>
     <label v-if="error" class="error" text="Sorry I couldn't find any movies."/>
-    <label v-if="error" class="error" text="If your internet connection's ok,"/>
-    <label v-if="error" class="error" text="the listings may not have been released yet."/>
+    <label v-if="error" class="error" text="Please check your internet connection."/>
     <ListView ref="listView" @loaded="loaded" for="(result, index) in results" height="100%">
       <v-template>
         <card-view
@@ -287,7 +286,9 @@ export default {
     loaded() {
       this.buildUrl();
       socket.on("image links", data => {
-        this.images = data;
+        if (typeof data != "undefined" && data != undefined) {
+          this.images = data;
+        }
       });
     },
     flip(i) {

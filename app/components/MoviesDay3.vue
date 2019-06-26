@@ -287,7 +287,9 @@ export default {
     loaded() {
       this.buildUrl();
       socket.on("image links", data => {
-        this.images = data;
+        if (typeof data != "undefined" && data != undefined) {
+          this.images = data;
+        }
       });
     },
     flip(i) {
