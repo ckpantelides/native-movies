@@ -25,8 +25,9 @@ The last major difference is that NativeScript doesn't support rotateY. In the w
 
 ![img1] ![img2]
 
-[img1]: https://github.com/ckpantelides/movietimes/blob/images/movie-web1.jpg
-[img2]: https://github.com/ckpantelides/movietimes/blob/images/movie-web2.jpg
+[img1]: https://github.com/ckpantelides/native-movies/blob/images/movie-app1.jpg
+[img2]: https://github.com/ckpantelides/native-movies/blob/images/movie-app2.jpg
+
 
 #### Installation
 
