@@ -17,9 +17,9 @@ The results of the cinema search and movie listings are cached using the [native
 
 #### Notes on development
 
-This is an android port of a [vue web app](https://github.com/ckpantelides/movietimes) I developed. Porting it wasn't too difficult, the component structure is generally the same, although the app has 7 days of movie times instead of 3. NativeScript doesn't use divs, so I used mostly StackLayout and ListView to structure the code.
+This is an android port of a [vue web app](https://github.com/ckpantelides/movietimes) I developed. Porting it wasn't too difficult, the component structure is generally the same, although the app has 7 days of movie listings instead of 3. NativeScript doesn't use divs, so I used mostly StackLayout and ListView to structure the code.
 
-Another difference is that the "view" doesn't update automatically (for example when the movie posters are received from the back end). To get around this, I gave my list a movies a reference called listView (ref="listView"). I used a watcher to look for changes in the poster images' data, which would fire the following code when the images were received: this.$refs.listView.nativeView.refresh(). Code that use "refs" can't be used in functions that fire when the component is loaded or mounted.
+Another difference is that the "view" doesn't update automatically (for example when the movie posters are received from the backend). To get around this, I gave my list of movies a reference called listView (ref="listView"). I used a watcher to look for changes in the poster images' data, which would fire the following code when the images were received: this.$refs.listView.nativeView.refresh(). NB code that uses "refs" can't be used in functions that fire when the component is loaded or mounted.
 
 The last major difference is that NativeScript doesn't support rotateY. In the web version of the app, when a movie listing is tapped, it flips over to show the movie's description. Without rotateY the flip animation isn't possible.
 
