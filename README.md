@@ -23,11 +23,6 @@ Another difference is that the "view" doesn't update automatically (for example 
 
 The last major difference is that NativeScript doesn't support rotateY. In the web version of the app, when a movie listing is tapped, it flips over to show the movie's description. Without rotateY the flip animation isn't possible.
 
-![img1] ![img2]
-
-[img1]: https://github.com/ckpantelides/movietimes/blob/images/movie-web1.jpg
-[img2]: https://github.com/ckpantelides/movietimes/blob/images/movie-web2.jpg
-
 #### Installation
 
 > npm install // install dependencies
