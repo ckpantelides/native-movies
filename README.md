@@ -9,9 +9,9 @@ It finds your location using the android geolocation API. It then finds your loc
 
 CineList is also used to get the the film listings for 7 days. The calls between the CineList API are managed through axios.
 
-When the movie listings are displayed, the frontend connects via socket.io to a separate [backend](https://github.com/ckpantelides/movietime-server). I send an array of the film names to this backend, which searches [The Movie DB](https://www.themoviedb.org/) for the films' poster and description, and sends these back to the frontend.
+When the movie listings are displayed, the frontend connects via socket.io to a separate [backend](https://github.com/ckpantelides/movietime-server). I send an array of the film names to this backend, which searches [The Movie DB](https://www.themoviedb.org/) for the films' posters and descriptions, and sends these back to the frontend.
 
-By clicking on an individual film listing, it gives you the movie's description.
+By clicking on an individual film listing, it shows you the movie's description.
 
 #### Notes on development
 
