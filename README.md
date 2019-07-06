@@ -33,6 +33,6 @@ The last major difference is that NativeScript doesn't support rotateY. In the w
 
 > npm install // install dependencies
 
-> tns build android --bundle // build for production
+> tns run android --bundle // compile for development
 
-> tns run android --bundle // compile for development with hot reloads
+> tns build android --bundle // build for production
