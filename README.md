@@ -11,7 +11,9 @@ CineList is also used to get the the film listings for 7 days. The calls between
 
 When the movie listings are displayed, the frontend connects via socket.io to a separate [backend](https://github.com/ckpantelides/movietime-server). I send an array of the film names to this backend, which searches [The Movie DB](https://www.themoviedb.org/) for the films' posters and descriptions, and sends these back to the frontend.
 
-By clicking on an individual film listing, it shows you the movie's description.
+By clicking on an individual film listing, it shows you the movie's description. 
+
+The results of the cinema search and movie listings are cached using the [nativescript-localstorage](https://www.npmjs.com/package/nativescript-localstorage) package.
 
 #### Notes on development
 
