@@ -15,6 +15,12 @@ By clicking on an individual film listing, it shows you the movie's description.
 
 The results of the cinema search and movie listings are cached using the [nativescript-localstorage](https://www.npmjs.com/package/nativescript-localstorage) package.
 
+#### Code structure
+
+The Cinema component is intially displayed on startup. It get's your location, makes the request to CineList and displays the results. Once the user has selected a cinema from the results, the cinema's id is passed to the MovieTimes component, which has seven child components for each day of the week. The component for "today" is the first of these that will display, and will send a request to CineList for the movie times using the cinema id. There's a separate component for cinema searches by place name.
+
+As the structure is straightforward, routing is handled manually, and data and events are passed from component to component (rather than using an eventbus or Vuex).
+
 #### Notes on development
 
 This is an android port of a [vue web app](https://github.com/ckpantelides/movietimes) I developed. Porting it wasn't too difficult, the component structure is generally the same, although the app has 7 days of movie listings instead of 3. NativeScript doesn't use divs, so I used mostly StackLayout and ListView to structure the code.
