@@ -1,11 +1,11 @@
 {
-  "name": "native-movies",
+  "name": "cinema-listings-uk",
   "version": "1.0.0",
   "description": "A native movie-time finder built with NativeScript",
   "author": "ck",
   "license": "MIT",
   "nativescript": {
-    "id": "org.nativescript.application",
+    "id": "org.christos.cinemalistings",
     "tns-ios": {
       "version": "5.0.0"
     },
