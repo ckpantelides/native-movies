@@ -19,7 +19,7 @@ The results of the cinema search and movie listings are cached using the [native
 
 The Cinema component is intially displayed on startup. It get's your location, makes the request to CineList and displays the results. Once the user has selected a cinema from the results, the cinema's id is passed to the MovieTimes component, which has seven child components for each day of the week. The component for "today" is the first of these that will display, and will send a request to CineList for the movie times using the cinema id. There's a separate component for cinema searches by place name.
 
-As the structure is straightforward, routing is handled manually, and data and events are passed from component to component (rather than using an eventbus or Vuex).
+As the structure is straightforward, routing is handled manually, and data and events are passed from component to component (rather than using an event bus or Vuex).
 
 #### Notes on development
 
@@ -28,6 +28,10 @@ This is an android port of a [vue web app](https://github.com/ckpantelides/movie
 Another difference is that the "view" doesn't update automatically (for example when the movie posters are received from the backend). To get around this, I gave my list of movies a reference called listView (ref="listView"). I used a watcher to look for changes in the poster images' data, which would fire the following code when the images were received: this.$refs.listView.nativeView.refresh(). NB code that uses "refs" can't be used in functions that fire when the component is loaded or mounted.
 
 The last major difference is that NativeScript doesn't support rotateY. In the web version of the app, when a movie listing is tapped, it flips over to show the movie's description. Without rotateY the flip animation isn't possible.
+
+#### Building the release app
+
+I had to add the following to the node field in webpack.config.js: node: { net: 'empty', tls: 'empty', dns: 'empty' }. Building through the CLI wouldn't complete, so I built the app through NativeScript Sidekick. The NativeScript ID in the package.json has to be changed from the default first. And I had to convert the keystore.jks file to a .p12 file.
 
 ![img1] ![img2]
 
