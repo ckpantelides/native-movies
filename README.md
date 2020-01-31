@@ -1,6 +1,6 @@
 ```diff
 - This version of the app has been superceded (as the CineList-API is now deprecated)
-- Version 2 of the app can be found [here](https://github.com/ckpantelides/movietimes-native)
+- Version 2 of the app can be found here: https://github.com/ckpantelides/movietimes-native
 ```
 
 Movie times app
